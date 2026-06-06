@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    uses: elixir-vibe/actions/.github/workflows/elixir-rustler-ci.yml@v1
+    with:
+      extra-env: |
+        OXIDE_EX_BUILD=1
+      rust-cache-workspaces: |
+        native/oxide_ex_nif -> target

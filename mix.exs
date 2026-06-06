@@ -8,11 +8,11 @@ defmodule Oxide.MixProject do
     [
       app: :oxide_ex,
       version: @version,
-      elixir: "~> 1.17",
+      elixir: "~> 1.19",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       aliases: aliases(),
-      dialyzer: [plt_add_apps: [:mix]],
+      dialyzer: [plt_add_apps: [:mix], flags: [:no_opaque]],
       name: "Oxide",
       description:
         "Elixir NIF bindings for Tailwind CSS Oxide — fast parallel content scanning and candidate extraction.",
@@ -57,14 +57,14 @@ defmodule Oxide.MixProject do
         "cmd cargo fmt --manifest-path native/oxide_ex_nif/Cargo.toml -- --check",
         "cmd cargo clippy --manifest-path native/oxide_ex_nif/Cargo.toml -- -D warnings"
       ],
-      ci: ["lint", "cmd MIX_ENV=test mix test"]
+      ci: ["lint", "cmd env MIX_ENV=test mix test"]
     ]
   end
 
   defp deps do
     [
       {:rustler_precompiled, "~> 0.8"},
-      {:rustler, "~> 0.36 or ~> 0.37", optional: true},
+      {:rustler, "~> 0.36 or ~> 0.37 or ~> 0.38", optional: true},
       {:ex_doc, "~> 0.35", only: :dev, runtime: false},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
