@@ -25,3 +25,5 @@ oxide-*.tar
 # Rust binary artifacts
 /target/
 /priv/native/
+
+.unsafe-audit/
